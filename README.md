@@ -50,6 +50,7 @@ blog/
 4. Fai il primo commit: `"Setup iniziale progetto Blog Dashboard"`
 
 Oppure fai una fork del progetto già creato dal docente e clonalo, così avrai già tutto pronto e potrai concentrarti solo sul codice.
+Il link del progetto del docente lo si può trovare su [GitHub](https://github.com/CerseoWeb/BlogDashboard)
 
 ### Workflow Git
 Dopo **ogni funzionalità**, fai un commit:

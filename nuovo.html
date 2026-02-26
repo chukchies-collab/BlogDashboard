@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuovo Post - Blog Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 Blog Dashboard</h1>
+            <p class="subtitle">Crea un nuovo post per il blog</p>
+            <nav class="navigation">
+                <a href="index.html" class="nav-link">📋 Lista Post</a>
+                <a href="nuovo.html" class="nav-link active">➕ Nuovo Post</a>
+            </nav>
+        </header>
+
+        <!-- FORM NUOVO POST -->
+        <div class="form-section">
+            <h2>Crea un Nuovo Post</h2>
+            <form id="postForm">
+                <div class="form-group">
+                    <label for="postTitolo">Titolo</label>
+                    <input type="text" id="postTitolo" placeholder="Titolo del post...">
+                    <span class="error-msg" id="titoloError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="postContenuto">Contenuto</label>
+                    <textarea id="postContenuto" rows="5" placeholder="Scrivi il contenuto del post..."></textarea>
+                    <span class="error-msg" id="contenutoError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="postAutore">Autore</label>
+                    <select id="postAutore">
+                        <option value="">Seleziona un autore...</option>
+                        <!-- Opzioni generate dinamicamente -->
+                    </select>
+                    <span class="error-msg" id="autoreError"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Pubblica Post</button>
+            </form>
+        </div>
+
+        <!-- MESSAGGIO di conferma o errore -->
+        <div id="message" class="message nascosto"></div>
+    </div>
+
+    <script src="nuovo.js"></script>
+</body>
+</html>

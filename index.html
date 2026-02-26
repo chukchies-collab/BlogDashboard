@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 Blog Dashboard</h1>
+            <p class="subtitle">Visualizza e gestisci i post del blog</p>
+            <nav class="navigation">
+                <a href="index.html" class="nav-link active">📋 Lista Post</a>
+                <a href="nuovo.html" class="nav-link">➕ Nuovo Post</a>
+            </nav>
+        </header>
+
+        <!-- FILTRI -->
+        <div class="filters-section">
+            <input type="text" id="searchInput" class="search-bar" placeholder="Cerca per titolo...">
+            <select id="authorFilter" class="filter-select">
+                <option value="">Tutti gli autori</option>
+                <!-- Opzioni generate dinamicamente -->
+            </select>
+        </div>
+
+        <!-- TABELLA POST -->
+        <!--
+        Qui manca la tabella.
+        La struttura sarà:
+            - Un div con classe "table-section"
+            - Un h2 con il titolo "Post del Blog"
+            - Una tabella con id "postsTable" che contiene:
+                - Thead con le intestazioni: Autore, Titolo, Contenuto, Likes, Data, Azioni
+                - Tbody con id "postsTableBody" dove verranno inserite le righe dinamicamente
+        -->
+
+        <!-- MESSAGGIO (per stato vuoto o errori) -->
+        <div id="message" class="message nascosto"></div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>

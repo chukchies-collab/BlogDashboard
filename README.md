@@ -189,3 +189,9 @@ const risultati = posts.filter(post => {
 - Hai l'header `"Content-Type": "application/json"`?
 - Hai usato `JSON.stringify()` nel body?
 - Controlla la tab **Network** in DevTools per vedere la richiesta
+
+
+### Risorse Utili
+
+- [MDN - Fetch API](https://developer.mozilla.org/it/docs/Web/API/Fetch_API)
+- [MDN - Array Methods](https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/Array)

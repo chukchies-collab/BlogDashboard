@@ -28,14 +28,83 @@
  */
 
 
+const BASE_URL = 'http://localhost:5000/api';
+const tableBody = document.querySelector('#postsTableBody');
+const button = document.querySelector('.nav-link.active');
+const authorFilter = document.querySelector('#authorFilter');
+const searchInput = document.querySelector('#searchInput');
+let tuttiIPosts = [];
+let tuttiGliUtenti = [];
 
 
 
+async function fetchDati() {
+    try {
+        const rispostaPosts = await fetch(`${BASE_URL}/posts`);
+        const rispostaUsers = await fetch(`${BASE_URL}/users`);
+        if (!rispostaPosts.ok || !rispostaUsers.ok) {
+            throw Error("Errore nel caricamento");
+        }
+
+        const posts = await rispostaPosts.json();
+        const users = await rispostaUsers.json();
+        tuttiGliUtenti =users;
+        tuttiIPosts =posts;
+
+        showPost(posts, users);
+        popolaFiltroAutori(users);
+    }
+    catch (error) {
+        alert(`Si è verificato un errore: ${error.message}`);
+    }
+
+}
+
+function showPost(posts, users) {
+
+    tableBody.innerHTML = '';
 
 
+    posts.forEach(post => {
+
+        const autore = users.find(user => user.id === post.userId);
 
 
+        const nome = autore ? autore.nome : 'Autore';
+        const cognome = autore ? autore.cognome : 'Sconosciuto';
 
+
+        const row = document.createElement('tr');
+        let contenutoTroncato = post.contenuto;
+        if (contenutoTroncato.length > 50) {
+            contenutoTroncato = contenutoTroncato.slice(0, 50) + '...';
+        }
+        row.innerHTML = `
+            <td>${nome} ${cognome}</td>
+            <td>${post.titolo}</td>
+            <td>${contenutoTroncato}</td>
+            <td>${post.likes}</td>
+            <td>${post.data}</td>
+            <td>
+                <button class="btn-delete">Elimina</button>
+            </td>
+        `;
+
+        tableBody.append(row);
+       const btnElimina = row.querySelector('.btn-delete');
+       
+        const postId= post.postId;
+        
+        btnElimina.addEventListener('click', () => {
+    
+            eliminaPost(postId)
+           
+        });
+
+    });
+}
+
+fetchDati()
 /**
  * =============================================
  * FASE 2 — FILTRI
@@ -54,12 +123,47 @@
  */
 
 
+function popolaFiltroAutori(users) {
+    // On réinitialise pour ne pas cumuler si on recharge
+    authorFilter.innerHTML = '<option value="">Tutti gli autori</option>';
+
+    users.forEach(user => {
+        const option = document.createElement('option');
+        option.value = user.id; // L'ID sert de valeur technique
+        option.textContent = `${user.nome} ${user.cognome}`; // Le texte visible par l'utilisateur
+        authorFilter.append(option);
+    });
+}
 
 
+function filtraPosts() {
+    // Recuperiamo i valori attuali dei filtri
+    const testoRicerca = searchInput.value.toLowerCase().trim();
+    const autoreSelezionato = authorFilter.value; // Sarà una stringa (es: "2") o vuoto ""
 
+    // Partiamo sempre dal tableau COMPLET d'origine
+    let postsFiltrati = tuttiIPosts;
 
+    // Filtro 1: Per titolo (se c'è del testo inserito)
+    if (testoRicerca !== "") {
+        postsFiltrati = postsFiltrati.filter(post => 
+            post.titolo.toLowerCase().includes(testoRicerca)
+        );
+    }
 
+    // Filtro 2: Per autore (se un autore specifico è selezionato)
+    if (autoreSelezionato !== "") {
+        postsFiltrati = postsFiltrati.filter(post => 
+            post.userId === parseInt(autoreSelezionato)
+        );
+    }
 
+    // Mostriamo solo i post che hanno superato entrambi i filtri
+    showPost(postsFiltrati, tuttiGliUtenti);
+}
+
+searchInput.addEventListener('input', filtraPosts);
+authorFilter.addEventListener('change', filtraPosts);
 
 
 /**
@@ -79,11 +183,31 @@
  * - MODIFICA la funzione mostraPosts() per aggiungere un event listener al nuovo pulsante "Elimina" di ogni post, che chiama eliminaPost() con l'id del post da eliminare
  */
 
+async function eliminaPost(postId) {
+    
+    const conferma = confirm("Sei sicuro di voler eliminare questo post?");
+    
+   
+    if (!conferma) return;
 
+    try {
+        // 2. Envoi de la requête DELETE à l'API
+        const risposta = await fetch(`${BASE_URL}/posts/${postId}`, {
+            method: 'DELETE'
+        });
 
+        // Verifications des erreurs serveurs
+        if (!risposta.ok) {
+            throw new Error("Impossibile eliminare il post dal server.");
+        }
 
+        // 3. Si tout s'est bien passé, on recharge les données
+        alert("Post eliminato con successo!");
+        await fetchDati(); // Cette fonction réaffiche le tableau mis à jour
 
-
-
-
+    } catch (error) {
+        // Gestion des erreurs de réseau
+        alert(`Errore durante l'eliminazione: ${error.message}`);
+    }
+}
 

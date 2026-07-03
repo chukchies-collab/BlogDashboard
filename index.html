@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -36,6 +38,23 @@
                 - Thead con le intestazioni: Autore, Titolo, Contenuto, Likes, Data, Azioni
                 - Tbody con id "postsTableBody" dove verranno inserite le righe dinamicamente
         -->
+        <div class="table-section">
+            <h2>Post del Blog</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Autore</th>
+                        <th>Titolo</th>
+                        <th>Contenuto</th>
+                        <th>Likes</th>
+                        <th>Data</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody id="postsTableBody">
+                </tbody>
+            </table>
+        </div>
 
         <!-- MESSAGGIO (per stato vuoto o errori) -->
         <div id="message" class="message nascosto"></div>
@@ -43,4 +62,5 @@
 
     <script src="index.js"></script>
 </body>
+
 </html>
